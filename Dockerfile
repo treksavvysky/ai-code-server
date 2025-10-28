@@ -3,7 +3,12 @@ FROM linuxserver/code-server:latest
 
 # Switch to the root user to install new software globally
 USER root
-
+#
+# === Install Dependencies ===
+#
+# The linuxserver images are based on Alpine, so we use 'apk'
+# This adds Node.js and npm to the image.
+RUN apk add --no-cache nodejs npm
 #
 # === Install CLIs using npm ===
 #
