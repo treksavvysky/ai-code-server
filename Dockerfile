@@ -4,11 +4,15 @@ FROM linuxserver/code-server:latest
 # Switch to the root user to install new software globally
 USER root
 #
-# === Install Dependencies ===
+# === Install Dependencies (using apt-get) ===
 #
-# The linuxserver images are based on Alpine, so we use 'apk'
-# This adds Node.js and npm to the image.
-RUN apk add --no-cache nodejs npm
+# The base image is Debian/Ubuntu-based, so we use 'apt-get'
+# 1. Update package lists
+# 2. Install nodejs and npm
+# 3. Clean up apt cache to keep the image layer small
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
+    rm -rf /var/lib/apt/lists/*
 #
 # === Install CLIs using npm ===
 #
