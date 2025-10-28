@@ -1,11 +1,13 @@
+version: "3.8"
+
 services:
   code-server:
-    build: .  # <-- This is the only change
+    build: .
     container_name: code_server
     environment:
       - PUID=$(id -u)
       - PGID=$(id -g)
-      - TZ=America/Los_Angeles
+      - TZ=America/Los_Angles
     volumes:
       # ✅ Corrected path for the linuxserver image
       - vscode_config:/config
@@ -13,7 +15,6 @@ services:
       - vscode_projects:/config/project
       # make ssh keys persistant
       - vscode_ssh:/root/.ssh
-    
     # 'expose' is better than 'ports' when using a reverse proxy
     expose:
       - 8443
