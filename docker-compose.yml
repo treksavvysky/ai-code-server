@@ -1,6 +1,6 @@
 services:
   code-server:
-    image: lscr.io/linuxserver/code-server:latest
+    build: .
     container_name: code_server
     environment:
       - PUID=${PUID:-1000}
