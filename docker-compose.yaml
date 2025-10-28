@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   code-server:
     build: .
@@ -19,7 +18,6 @@ services:
     expose:
       - 8443
     restart: unless-stopped
-
 volumes:
   vscode_config:
   vscode_ssh:
