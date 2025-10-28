@@ -1,26 +1,39 @@
-version: "3.8"
 services:
   code-server:
-    build: .
+    image: lscr.io/linuxserver/code-server:latest
     container_name: code_server
     environment:
-      - PUID=$(id -u)
-      - PGID=$(id -g)
-      - TZ=America/Los_Angles
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=America/Los_Angeles
+      # Set one of these for login (or wire OIDC via your proxy)
+      - PASSWORD=${CODE_SERVER_PASSWORD:?set in .env}
+      # - HASHED_PASSWORD=$2y$10$...  # bcrypt alternative
+      # Optional: set default workspace
+      - DEFAULT_WORKSPACE=/config/workspace
     volumes:
-      # ✅ Corrected path for the linuxserver image
       - vscode_config:/config
-      # ✅ Corrected path for your projects
-      - vscode_projects:/config/project
-      # make ssh keys persistant
-      - vscode_ssh:/root/.ssh
-    # 'expose' is better than 'ports' when using a reverse proxy
+      - vscode_projects:/config/workspace
+      - vscode_ssh:/config/.ssh
     expose:
-      - 8443
+      - "8443"
+    networks:
+      - proxy
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 8443 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+
 volumes:
   vscode_config:
   vscode_ssh:
   vscode_projects:
     external: true
     name: coder-server-cb8mmc_vscode_projects
+
+networks:
+  proxy:
+    external: true
+    name: proxy
