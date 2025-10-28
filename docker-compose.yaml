@@ -6,10 +6,7 @@ services:
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=America/Los_Angeles
-      # Set one of these for login (or wire OIDC via your proxy)
-      - PASSWORD=${CODE_SERVER_PASSWORD:?set in .env}
-      # - HASHED_PASSWORD=$2y$10$...  # bcrypt alternative
-      # Optional: set default workspace
+      - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
       - DEFAULT_WORKSPACE=/config/workspace
     volumes:
       - vscode_config:/config
@@ -17,14 +14,7 @@ services:
       - vscode_ssh:/config/.ssh
     expose:
       - "8443"
-    networks:
-      - proxy
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 8443 || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 5
 
 volumes:
   vscode_config:
@@ -32,8 +22,3 @@ volumes:
   vscode_projects:
     external: true
     name: coder-server-cb8mmc_vscode_projects
-
-networks:
-  proxy:
-    external: true
-    name: proxy
