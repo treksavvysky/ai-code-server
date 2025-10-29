@@ -23,6 +23,8 @@ services:
 volumes:
   vscode_config:
   vscode_ssh:
+  gemini:
+  claude:
   vscode_projects:
     external: true
     name: coder-server-cb8mmc_vscode_projects
