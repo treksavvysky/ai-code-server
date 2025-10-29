@@ -13,7 +13,7 @@ services:
       - vscode_config:/home/coder/.config
       - vscode_projects:/home/coder/project
     expose:
-      - "8443"
+      - "8080"
     restart: unless-stopped
 
 volumes:
