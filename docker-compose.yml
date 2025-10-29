@@ -2,10 +2,8 @@ services:
   code-server:
     build: .
     container_name: code-server
-    
-    # This is the magic line. It runs the container as your
-    # host user, which automatically fixes all permission errors.
-    user: "${UID}:${GID}"
+    # Use root's UID and GID
+    user: "0:0"
     environment:
       - TZ=America/Los_Angeles
       - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
