@@ -3,8 +3,8 @@ services:
     build: .
     container_name: code_server
     environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
+      - PUID=1000 # <-- Use your UID from the 'id' command
+      - PGID=1000 # <-- Use your GID from the 'id' command
       - TZ=America/Los_Angeles
       - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
       - DEFAULT_WORKSPACE=/config/workspace
