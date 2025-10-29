@@ -1,20 +1,19 @@
 services:
   code-server:
     build: .
-    container_name: code_server
+    container_name: code-server
+    
+    # This is the magic line. It runs the container as your
+    # host user, which automatically fixes all permission errors.
+    user: "${UID}:${GID}"
     environment:
-      - PUID=0 # <-- Use your UID from the 'id' command
-      - PGID=0 # <-- Use your GID from the 'id' command
       - TZ=America/Los_Angeles
       - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
-      - DEFAULT_WORKSPACE=/config/workspace
-      - XDG_CONFIG_HOME=/config/.config
-      - XDG_DATA_HOME=config/.local/share
-      - XDG_CACHE_HOME=/config/.cache
     volumes:
-      - vscode_config:/config
-      - vscode_projects:/config/workspace
       - vscode_ssh:/config/.ssh
+      # Note: The paths are different for this image
+      - vscode_config:/home/coder/.config
+      - vscode_projects:/home/coder/project
     expose:
       - "8443"
     restart: unless-stopped

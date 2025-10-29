@@ -1,5 +1,5 @@
 # Start from the base image you are already using
-FROM linuxserver/code-server:latest
+FROM codercom/code-server:latest
 
 # Switch to the root user to install new software globally
 USER root
@@ -28,6 +28,5 @@ RUN npm install -g @anthropic-ai/claude-code
 # === End of Installations ===
 #
 
-# Switch back to the default non-root user 'abc'
-# This is the user 'code-server' runs as.
-USER abc
+# Switch back to the default user for this image
+USER coder
