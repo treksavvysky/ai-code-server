@@ -8,6 +8,9 @@ services:
       - TZ=America/Los_Angeles
       - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
       - DEFAULT_WORKSPACE=/config/workspace
+      - XDG_CONFIG_HOME=/config/.config
+      - XDG_DATA_HOME=config/.local/share
+      - XDG_CACHE_HOME=/config/.cache
     volumes:
       - vscode_config:/config
       - vscode_projects:/config/workspace
