@@ -10,7 +10,9 @@ services:
       - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - vscode_ssh:/config/.ssh
+      - vscode_ssh:/root/.ssh
+      - gemini:/root/.gemini
+      - claude:/root/.claude
       # Note: The paths are different for this image
       - vscode_config:/home/coder/.config
       - vscode_projects:/home/coder/project

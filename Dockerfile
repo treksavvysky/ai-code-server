@@ -15,6 +15,7 @@ RUN apt-get update && \
     apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 #
+RUN curl -L https://download.docker.com/linux/static/stable/x86_64/docker-27.3.1.tgz | tar -xz && mv docker/* /usr/local/bin/
 # === Install CLIs using npm ===
 #
 # The base image already has Node.js and npm.
