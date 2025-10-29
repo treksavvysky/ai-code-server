@@ -5,13 +5,14 @@ FROM codercom/code-server:latest
 USER root
 #
 # === Install Dependencies (using apt-get) ===
-#
-# The base image is Debian/Ubuntu-based, so we use 'apt-get'
-# 1. Update package lists
-# 2. Install nodejs and npm
-# 3. Clean up apt cache to keep the image layer small
+# === Install Node.js 20 ===
+# 1. Add the NodeSource repository for Node 20
+# 2. Install Node.js (which includes npm)
+# 3. Clean up apt cache
 RUN apt-get update && \
-    apt-get install -y nodejs npm && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 #
 # === Install CLIs using npm ===
